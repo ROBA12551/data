@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ProxyForce - Advanced proxy and compression control extension with 10-level power adjustment. Fast, secure, and private browsing." />
+  <meta name="keywords" content="proxy, vpn, ad blocker, compression, privacy, browser extension, chrome" />
+  <meta property="og:title" content="ProxyForce - Advanced Proxy & Compression Control" />
+  <meta property="og:description" content="Ultimate proxy control extension with 10-level power adjustment. Fast, secure, and private browsing." />
+  <meta property="og:image" content="https://proxyforce.io/og-image.png" />
+  <meta property="og:type" content="website" />
+  <title>ProxyForce - Advanced Proxy & Compression Control</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+    /* ============================
+       Simple: White / Black / Light Aqua
+       + "6D future" ambient background
+       ============================ */
+
+    :root {
+      --bg: #f6fbff;
+      --card: rgba(255, 255, 255, 0.72);
+      --card2: rgba(255, 255, 255, 0.62);
+      --ink: #0b0f16;
+      --muted: rgba(11, 15, 22, 0.62);
+      --line: rgba(11, 15, 22, 0.10);
+      --ice: #a9e9ff;
+      --ice2: #dff6ff;
+
+      --shadow: 0 20px 60px rgba(11, 15, 22, 0.10);
+      --shadow2: 0 12px 30px rgba(11, 15, 22, 0.08);
+
+      --r: 18px;
+      --t: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 900px at 20% -10%, var(--ice2), transparent 60%),
+        radial-gradient(900px 700px at 110% 30%, rgba(169, 233, 255, 0.55), transparent 55%),
+        linear-gradient(180deg, #ffffff, var(--bg));
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ============================
+       6D-ish background animation
+       ============================ */
+    .bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* soft drifting fog */
+    .bg::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(800px 600px at 15% 20%, rgba(169, 233, 255, 0.55), transparent 55%),
+        radial-gradient(900px 700px at 85% 30%, rgba(169, 233, 255, 0.35), transparent 55%),
+        radial-gradient(700px 500px at 45% 90%, rgba(11, 15, 22, 0.10), transparent 55%);
+      filter: blur(22px);
+      opacity: 0.95;
+      animation: fog 14s var(--t) infinite alternate;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @keyframes fog {
+      0% { transform: translate3d(-14px, -10px, 0) scale(1.02) rotate(0.3deg); }
+      50% { transform: translate3d(10px, 12px, 0) scale(1.06) rotate(-0.2deg); }
+      100% { transform: translate3d(18px, -6px, 0) scale(1.03) rotate(0.4deg); }
+    }
+
+    /* hyper lattice grid */
+    .lattice {
+      position: absolute;
+      inset: -15%;
+      background:
+        linear-gradient(90deg, rgba(11, 15, 22, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(11, 15, 22, 0.06) 1px, transparent 1px),
+        radial-gradient(circle at 20% 25%, rgba(169, 233, 255, 0.26), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(169, 233, 255, 0.16), transparent 55%);
+      background-size: 58px 58px, 58px 58px, auto, auto;
+      mask-image: radial-gradient(circle at 55% 45%, rgba(0, 0, 0, 0.92), transparent 70%);
+      opacity: 0.55;
+      animation: lattice 10s var(--t) infinite alternate;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @keyframes lattice {
+      0% { transform: translate3d(-10px, 8px, 0) rotate(0.2deg) scale(1.02); }
+      100% { transform: translate3d(14px, -12px, 0) rotate(-0.25deg) scale(1.05); }
+    }
+
+    /* dimensional ribbons */
+    .ribbons {
+      position: absolute;
+      inset: -10%;
+      background:
+        conic-gradient(from 220deg at 50% 50%,
+          transparent 0 18%,
+          rgba(169, 233, 255, 0.45) 22%,
+          transparent 28% 55%,
+          rgba(169, 233, 255, 0.18) 58%,
+          transparent 65% 100%);
+      filter: blur(10px);
+      opacity: 0.42;
+      mix-blend-mode: multiply;
+      animation: ribbons 12s linear infinite;
+    }
+
+    @keyframes ribbons {
+      0% { transform: rotate(0deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1.05); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bg::before, .lattice, .ribbons {
+        animation: none !important;
+      }
+    }
+
+    /* ============================
+       Navigation (simple glass)
+       ============================ */
+    nav {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      font-size: clamp(14px, 3vw, 16px);
+    }
+
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 30% 30%, #fff, rgba(169, 233, 255, 0.65)),
+        linear-gradient(135deg, rgba(11, 15, 22, 0.10), rgba(169, 233, 255, 0.45));
+      border: 1px solid rgba(11, 15, 22, 0.08);
+      box-shadow: 0 10px 25px rgba(169, 233, 255, 0.35);
+      flex: 0 0 auto;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav a {
+      color: rgba(11, 15, 22, 0.78);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: clamp(12px, 2vw, 13px);
+      letter-spacing: 0.02em;
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: background var(--t), color var(--t), border-color var(--t);
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      background: rgba(169, 233, 255, 0.22);
+      border-color: rgba(169, 233, 255, 0.55);
+      color: rgba(11, 15, 22, 0.92);
+    }
+
+    .cta-button {
+      background: linear-gradient(180deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.55));
+      color: rgba(11, 15, 22, 0.95);
+      padding: 10px 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(11, 15, 22, 0.10);
+      box-shadow: 0 16px 40px rgba(169, 233, 255, 0.22), 0 10px 24px rgba(11, 15, 22, 0.08);
+      transition: transform var(--t), box-shadow var(--t), filter var(--t);
+      white-space: nowrap;
+      font-size: clamp(11px, 1.8vw, 12px);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 20px 55px rgba(169, 233, 255, 0.28), 0 12px 28px rgba(11, 15, 22, 0.10);
+    }
+
+    /* ============================
+       Sections
+       ============================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(80px, 15vh, 120px) 20px clamp(40px, 10vh, 60px);
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 980px;
+      padding: 0 10px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(32px, 8vw, 62px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .hero-content h1 .accent {
+      background: linear-gradient(90deg, rgba(11, 15, 22, 0.95), rgba(169, 233, 255, 0.95));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-content p {
+      color: var(--muted);
+      font-size: clamp(14px, 3vw, 16px);
+      max-width: 680px;
+      margin: 0 auto 26px;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      padding: clamp(10px, 2vw, 12px) clamp(12px, 3vw, 16px);
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-size: clamp(11px, 2vw, 12px);
+      border: 1px solid var(--line);
+      transition: transform var(--t), box-shadow var(--t), border-color var(--t), background var(--t);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button-primary {
+      background: rgba(11, 15, 22, 0.92);
+      color: #fff;
+      border-color: rgba(11, 15, 22, 0.92);
+      box-shadow: 0 16px 40px rgba(11, 15, 22, 0.18);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 60px rgba(11, 15, 22, 0.22);
+    }
+
+    .button-secondary {
+      background: var(--card);
+      color: rgba(11, 15, 22, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .button-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(169, 233, 255, 0.75);
+      box-shadow: 0 18px 48px rgba(169, 233, 255, 0.18), 0 12px 26px rgba(11, 15, 22, 0.08);
+    }
+
+    /* Features */
+    .features {
+      padding: clamp(60px, 10vh, 90px) 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 6vw, 46px);
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: -0.02em;
+      margin-bottom: clamp(30px, 5vh, 42px);
+    }
+
+    .section-title .accent {
+      background: linear-gradient(90deg, rgba(11, 15, 22, 0.95), rgba(169, 233, 255, 0.95));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 20px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform var(--t), box-shadow var(--t), border-color var(--t), background var(--t);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(400px 200px at 20% 15%, rgba(169, 233, 255, 0.28), transparent 60%);
+      opacity: 0.9;
+      transform: rotate(10deg);
+      pointer-events: none;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(169, 233, 255, 0.75);
+      box-shadow: 0 20px 60px rgba(169, 233, 255, 0.14), 0 14px 32px rgba(11, 15, 22, 0.08);
+      background: rgba(255, 255, 255, 0.80);
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: clamp(14px, 2.5vw, 16px);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: clamp(12px, 2vw, 13px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Power section */
+    .power-section {
+      padding: clamp(60px, 10vh, 90px) 20px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.40);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .power-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .power-text {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 20px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .power-text h2 {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .power-text p {
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-size: clamp(12px, 2vw, 13px);
+    }
+
+    .power-list {
+      list-style: none;
+      margin: 12px 0 0;
+    }
+
+    .power-list li {
+      padding: 8px 0;
+      color: var(--muted);
+      padding-left: 24px;
+      position: relative;
+      font-size: clamp(12px, 2vw, 13px);
+    }
+
+    .power-list li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: rgba(11, 15, 22, 0.75);
+      font-weight: 900;
+    }
+
+    .power-visual {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 20px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .power-level {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .power-label {
+      flex: 1;
+      font-weight: 800;
+      color: rgba(11, 15, 22, 0.86);
+      font-size: clamp(12px, 2vw, 13px);
+    }
+
+    .power-bar {
+      flex: 2;
+      height: 8px;
+      background: rgba(11, 15, 22, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(11, 15, 22, 0.10);
+      min-width: 60px;
+    }
+
+    .power-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.25));
+      border-radius: 999px;
+    }
+
+    /* Comparison */
+    .comparison {
+      padding: clamp(60px, 10vh, 90px) 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: clamp(12px, 2vw, 16px);
+      font-weight: 900;
+      font-size: clamp(11px, 2vw, 12px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(11, 15, 22, 0.86);
+      background: rgba(169, 233, 255, 0.16);
+      border-bottom: 1px solid var(--line);
+    }
+
+    td {
+      padding: clamp(10px, 2vw, 14px) clamp(12px, 2vw, 16px);
+      border-bottom: 1px solid rgba(11, 15, 22, 0.08);
+      color: rgba(11, 15, 22, 0.82);
+      font-size: clamp(12px, 2vw, 13px);
+    }
+
+    tr:hover td {
+      background: rgba(169, 233, 255, 0.10);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-links {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background var(--t), border-color var(--t), color var(--t);
+      font-weight: 700;
+      font-size: clamp(12px, 2vw, 13px);
+    }
+
+    .footer-links a:hover {
+      background: rgba(169, 233, 255, 0.18);
+      border-color: rgba(169, 233, 255, 0.55);
+      color: rgba(11, 15, 22, 0.88);
+    }
+
+    .footer-text {
+      font-size: clamp(11px, 2vw, 12px);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 12px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      nav ul {
+        gap: 8px;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .logo {
+        order: 1;
+      }
+
+      .cta-button {
+        order: 2;
+      }
+
+      .power-content {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: clamp(80px, 12vh, 100px) 16px 40px;
+      }
+
+      .features {
+        padding: 60px 16px;
+      }
+
+      .comparison {
+        padding: 60px 16px;
+      }
+
+      .power-section {
+        padding: 60px 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        padding: 10px;
+      }
+
+      nav ul {
+        gap: 6px;
+      }
+
+      nav a {
+        padding: 6px 8px;
+      }
+
+      .feature-card {
+        padding: 16px;
+      }
+
+      .power-text,
+      .power-visual {
+        padding: 16px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background animation layers -->
+  <div class="bg" aria-hidden="true">
+    <div class="lattice"></div>
+    <div class="ribbons"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <span class="logo-badge" aria-hidden="true"></span>
+      <span>ProxyForce</span>
+    </div>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#power">Power Control</a></li>
+      <li><a href="#comparison">Comparison</a></li>
+      <li><a href="https://chrome.google.com/webstore" rel="noopener noreferrer">Web Store</a></li>
+    </ul>
+    <a href="https://chrome.google.com/webstore" class="cta-button" rel="noopener noreferrer">Install</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1><span class="accent">ProxyForce</span></h1>
+      <p>
+        Advanced proxy and compression control with 10-level power adjustment.<br />
+        Fast, secure, and private browsing in one extension.
+      </p>
+      <div class="hero-buttons">
+        <a href="https://chrome.google.com/webstore" class="button button-primary" rel="noopener noreferrer">Add to Chrome</a>
+        <a href="#features" class="button button-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2 class="section-title"><span class="accent">Key Features</span></h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">SRV</span>
+        <h3>Proxy Control</h3>
+        <p>Switch between multiple proxy servers freely. Achieve secure and fast communication with flexible server selection.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">ZIP</span>
+        <h3>Data Compression</h3>
+        <p>Control compression rates in 10 levels. Reduce network load by up to 99% and optimize bandwidth usage.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">BAN</span>
+        <h3>Ad Blocking</h3>
+        <p>Automatically detect and remove unwanted advertisements. Enjoy a clean and comfortable browsing experience.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">EYE</span>
+        <h3>Tracking Prevention</h3>
+        <p>Block 2,400+ tracking domains. Protect your privacy completely from online trackers and analytics services.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">LCK</span>
+        <h3>Encrypted Communication</h3>
+        <p>Enforce HTTPS and SSL/TLS support. Establish a secure communication environment with strong encryption.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">GER</span>
+        <h3>Caching Optimization</h3>
+        <p>Smart caching mechanism for faster loading. Service Worker compatible for enhanced performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Power Level Section -->
+  <section class="power-section" id="power">
+    <div class="power-content">
+      <div class="power-text">
+        <h2>10-Level Power Control</h2>
+        <p>Fine-tune your browsing experience. Customize settings to match your specific needs.</p>
+
+        <ul class="power-list">
+          <li>Level 1-3: Lightweight mode (low power consumption)</li>
+          <li>Level 4-6: Balanced mode (recommended)</li>
+          <li>Level 7-10: Maximum protection mode (full features)</li>
+        </ul>
+
+        <p>Higher power levels increase:</p>
+        <ul class="power-list">
+          <li>Data compression rate (up to 99%)</li>
+          <li>Privacy protection level</li>
+          <li>Ad and tracking blocking effectiveness</li>
+        </ul>
+      </div>
+
+      <div class="power-visual">
+        <div class="power-level">
+          <span class="power-label">Level 1</span>
+          <div class="power-bar"><div class="power-fill" style="width: 10%;"></div></div>
+        </div>
+        <div class="power-level">
+          <span class="power-label">Level 3</span>
+          <div class="power-bar"><div class="power-fill" style="width: 30%;"></div></div>
+        </div>
+        <div class="power-level">
+          <span class="power-label">Level 5</span>
+          <div class="power-bar"><div class="power-fill" style="width: 50%;"></div></div>
+        </div>
+        <div class="power-level">
+          <span class="power-label">Level 7</span>
+          <div class="power-bar"><div class="power-fill" style="width: 70%;"></div></div>
+        </div>
+        <div class="power-level">
+          <span class="power-label">Level 10</span>
+          <div class="power-bar"><div class="power-fill" style="width: 100%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="comparison" id="comparison">
+    <h2 class="section-title"><span class="accent">Power Level Comparison</span></h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Compression</th>
+            <th>Latency</th>
+            <th>Recommended For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1-3</td>
+            <td>10-30%</td>
+            <td>30-80ms</td>
+            <td>Lightweight, low power</td>
+          </tr>
+          <tr>
+            <td>4-6</td>
+            <td>35-55%</td>
+            <td>100-150ms</td>
+            <td>Balanced (recommended)</td>
+          </tr>
+          <tr>
+            <td>7-10</td>
+            <td>70-99%</td>
+            <td>200-400ms</td>
+            <td>Maximum protection</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="hero" style="min-height: auto; padding: clamp(50px, 8vh, 70px) 20px;">
+    <div class="hero-content">
+      <h2 class="section-title" style="margin-bottom: 10px;"><span class="accent">Get Started Now</span></h2>
+      <p>ProxyForce is available free on the Chrome Web Store. Install in seconds and start protecting your privacy.</p>
+      <div class="hero-buttons" style="margin-top: 20px;">
+        <a href="https://chrome.google.com/webstore" class="button button-primary" rel="noopener noreferrer">Add to Chrome</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Service</a>
+      <a href="#contact">Contact</a>
+      <a href="https://twitter.com/proxyforce" rel="noopener noreferrer">Twitter</a>
+    </div>
+    <p class="footer-text">&copy; 2026 ProxyForce. All rights reserved.</p>
+  </footer>
+</body>
+</html>
