@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const https = require('https');
 
 const FINNHUB_KEY = process.env.FINNHUB_KEY;
