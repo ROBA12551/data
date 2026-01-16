@@ -175,12 +175,15 @@
             justify-content: space-between;
             box-shadow: 0 2px 12px var(--shadow);
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 16px;
         }
         
         .logo-area {
             display: flex;
             align-items: center;
             gap: 16px;
+            min-width: max-content;
         }
         
         .logo {
@@ -194,6 +197,7 @@
             color: white;
             font-weight: 700;
             font-size: 16px;
+            flex-shrink: 0;
         }
         
         .logo-text {
@@ -201,6 +205,7 @@
             font-weight: 700;
             color: var(--text-primary);
             letter-spacing: -0.5px;
+            white-space: nowrap;
         }
         
         .logo-subtext {
@@ -214,11 +219,15 @@
             display: flex;
             align-items: center;
             gap: 24px;
+            flex: 1;
+            justify-content: flex-end;
+            flex-wrap: wrap;
         }
         
         .exchange-selector {
             display: flex;
             gap: 8px;
+            overflow-x: auto;
         }
         
         .exchange-btn {
@@ -231,6 +240,8 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .exchange-btn:hover {
@@ -252,6 +263,8 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 20px;
+            white-space: nowrap;
+            min-width: max-content;
         }
         
         .status-dot {
@@ -260,6 +273,7 @@
             background: var(--success);
             border-radius: 50%;
             animation: pulse 2s infinite;
+            flex-shrink: 0;
         }
         
         @keyframes pulse {
@@ -382,6 +396,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            flex: 1;
         }
         
         .symbol-name {
@@ -397,6 +412,7 @@
             padding: 2px 8px;
             border-radius: 4px;
             display: inline-block;
+            width: fit-content;
         }
         
         .symbol-price {
@@ -462,7 +478,7 @@
         }
         
         .analysis-header {
-            padding: 30px;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
             background: var(--bg-primary);
             position: sticky;
@@ -473,14 +489,23 @@
         .symbol-display {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
         
         .symbol-details {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .symbol-details h1 {
+            font-size: 24px;
+            font-weight: 700;
+            white-space: nowrap;
         }
         
         .symbol-badge {
@@ -490,6 +515,7 @@
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         
         .symbol-badge.buy {
@@ -512,10 +538,11 @@
         
         .price-display-large {
             text-align: right;
+            white-space: nowrap;
         }
         
         .current-price-large {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 4px;
@@ -525,22 +552,25 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 14px;
+            font-size: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
         
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
         }
         
         .metric-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             transition: all 0.2s;
+            min-width: 140px;
         }
         
         .metric-card:hover {
@@ -549,7 +579,7 @@
         }
         
         .metric-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -557,15 +587,16 @@
         }
         
         .metric-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
         }
         
         .metric-subtext {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-tertiary);
             margin-top: 4px;
+            line-height: 1.4;
         }
         
         .confidence-meter {
@@ -584,31 +615,30 @@
         }
         
         .analysis-sections {
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
         }
-          .ad-center {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* 横中央 */
-  }
-  .ad-center > * {
-    max-width: 100%;
-  }
+        
+        .ad-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
         .analysis-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
         }
         
         .section-title-large {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -616,7 +646,7 @@
         
         .conditions-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 12px;
         }
         
@@ -624,20 +654,21 @@
             background: var(--bg-primary);
             border: 1px solid var(--border-light);
             border-radius: 8px;
-            padding: 16px;
+            padding: 12px;
         }
         
         .condition-header {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .condition-status {
             width: 12px;
             height: 12px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
         
         .condition-status.valid {
@@ -653,39 +684,39 @@
         }
         
         .condition-name {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-primary);
         }
         
         .condition-value {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         .trading-plan {
             background: var(--accent-light);
             border: 2px solid var(--accent-primary);
             border-radius: 16px;
-            padding: 24px;
+            padding: 20px;
         }
         
         .plan-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
         }
         
         .plan-item {
-            padding: 16px;
+            padding: 12px;
             background: var(--bg-primary);
             border-radius: 8px;
             border: 1px solid var(--border);
         }
         
         .plan-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-tertiary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -693,7 +724,7 @@
         }
         
         .plan-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-primary);
         }
@@ -708,38 +739,39 @@
         }
         
         .chat-header {
-            padding: 24px;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
             background: var(--bg-primary);
         }
         
         .chat-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
         }
         
         .chat-subtitle {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         .chat-display {
             flex: 1;
             overflow-y: auto;
-            padding: 24px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
         
         .chat-message {
-            padding: 16px;
+            padding: 12px;
             border-radius: 12px;
             max-width: 90%;
             animation: slideIn 0.3s ease-out;
+            font-size: 13px;
         }
         
         @keyframes slideIn {
@@ -769,11 +801,11 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .message-sender {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -788,37 +820,37 @@
         }
         
         .message-time {
-            font-size: 10px;
+            font-size: 9px;
             opacity: 0.7;
         }
         
         .message-content {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 12px;
+            line-height: 1.5;
         }
         
         .chat-input-area {
-            padding: 24px;
+            padding: 16px;
             border-top: 1px solid var(--border);
             background: var(--bg-primary);
         }
         
         .chat-input-wrapper {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
         
         .chat-input {
             flex: 1;
-            padding: 16px;
+            padding: 12px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-primary);
             transition: all 0.2s;
             resize: none;
-            min-height: 56px;
+            min-height: 48px;
             line-height: 1.5;
             font-family: inherit;
         }
@@ -829,22 +861,22 @@
             background: var(--bg-primary);
             box-shadow: 0 0 0 4px var(--shadow-hover);
         }
-          .ad-center { width: 100%; display:flex; justify-content:center; }
 
         .send-button {
-            padding: 0 28px;
+            padding: 0 20px;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             border: none;
             border-radius: 12px;
             color: white;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 100px;
+            min-width: 80px;
+            flex-shrink: 0;
         }
         
         .send-button:hover {
@@ -857,24 +889,24 @@
             background: rgba(255, 153, 0, 0.1);
             border: 1px solid var(--warning);
             border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 16px;
+            margin-top: 16px;
         }
         
         .warning-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--warning);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
         .warning-content {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.5;
         }
         
         /* Scrollbar */
@@ -899,7 +931,7 @@
         /* Responsive */
         @media (max-width: 1400px) {
             .container {
-                grid-template-columns: 300px 1fr;
+                grid-template-columns: 280px 1fr;
             }
             .chat-panel {
                 display: none;
@@ -915,7 +947,8 @@
                 position: fixed;
                 left: -100%;
                 top: 80px;
-                width: 320px;
+                width: 100%;
+                max-width: 320px;
                 height: calc(100vh - 80px);
                 z-index: 1000;
                 transition: left 0.3s;
@@ -925,10 +958,136 @@
                 left: 0;
             }
             .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             }
             .conditions-grid {
                 grid-template-columns: 1fr;
+            }
+            .header {
+                padding: 0 16px;
+            }
+            .analysis-header {
+                padding: 16px;
+            }
+            .analysis-sections {
+                padding: 16px;
+                gap: 16px;
+            }
+            .analysis-section {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-rows: auto 1fr;
+            }
+            .header {
+                height: auto;
+                padding: 12px 16px;
+            }
+            .logo-area {
+                min-width: 100%;
+                margin-bottom: 8px;
+            }
+            .status-bar {
+                width: 100%;
+            }
+            .exchange-selector {
+                width: 100%;
+                overflow-x: auto;
+            }
+            .logo-subtext {
+                display: none;
+            }
+            .current-price-large {
+                font-size: 22px;
+            }
+            .symbol-details h1 {
+                font-size: 18px;
+            }
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .metric-card {
+                padding: 12px;
+                min-width: auto;
+            }
+            .metric-value {
+                font-size: 18px;
+            }
+            .metric-label {
+                font-size: 10px;
+            }
+            .metric-subtext {
+                font-size: 9px;
+            }
+            .plan-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .section-title-large {
+                font-size: 14px;
+            }
+            .condition-card {
+                padding: 10px;
+            }
+            .condition-name {
+                font-size: 11px;
+            }
+            .condition-value {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 16px;
+            }
+            .exchange-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            .status-indicator {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            .current-price-large {
+                font-size: 18px;
+            }
+            .symbol-details h1 {
+                font-size: 16px;
+            }
+            .symbol-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .metric-card {
+                padding: 10px;
+                min-width: auto;
+            }
+            .metric-value {
+                font-size: 16px;
+            }
+            .section-title-large {
+                font-size: 13px;
+            }
+            .analysis-section {
+                border-radius: 12px;
+                padding: 12px;
+            }
+            .chat-input {
+                font-size: 12px;
+                min-height: 40px;
+            }
+            .send-button {
+                font-size: 11px;
+                min-width: 70px;
+                padding: 0 16px;
             }
         }
     </style>
@@ -957,7 +1116,7 @@
 
       <div class="status-indicator">
         <div class="status-dot"></div>
-        <span style="font-size: 12px; font-weight: 600;">REAL-TIME ANALYSIS</span>
+        <span style="font-size: 12px; font-weight: 600;">REAL-TIME</span>
       </div>
 
       <div style="margin-top:6px;font-size:12px;"></div>
@@ -992,7 +1151,7 @@
     <div class="analysis-header">
       <div class="symbol-display">
         <div class="symbol-details">
-          <h1 style="font-size: 24px; font-weight: 700;" id="currentSymbol">BTC/USDT</h1>
+          <h1 id="currentSymbol">BTC/USDT</h1>
           <div class="symbol-badge hold" id="signalBadge">HOLD</div>
         </div>
 
@@ -1000,14 +1159,14 @@
           <div class="current-price-large" id="currentPrice">$42,850.30</div>
           <div class="price-details">
             <span id="priceChange" class="positive">+2.45%</span>
-            <span style="color: var(--text-tertiary); font-size: 12px;">24h Volume: $24.5B</span>
+            <span style="color: var(--text-tertiary); font-size: 11px;">24h: $24.5B</span>
           </div>
         </div>
       </div>
 
-      <label style="display:flex;align-items:center;gap:8px;font-size:12px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px; margin-bottom: 12px;">
         <input type="checkbox" id="alertToggle">
-        Enable Signal Alerts (BUY / SELL)
+        Enable Signal Alerts
       </label>
 
       <div class="metrics-grid">
@@ -1017,13 +1176,13 @@
           <div class="confidence-meter">
             <div class="confidence-fill" id="confidenceFill" style="width: 68%"></div>
           </div>
-          <div class="metric-subtext">Confidence must be ≥65% for valid signal</div>
+          <div class="metric-subtext">≥65% for valid</div>
         </div>
 
         <div class="metric-card">
           <div class="metric-label">RSI (14)</div>
           <div class="metric-value" id="rsiValue">58.2</div>
-          <div class="metric-subtext">BUY: 55-68 | SELL: &lt;45 | HOLD: 48-55</div>
+          <div class="metric-subtext">48-55: HOLD</div>
         </div>
 
         <div class="metric-card">
@@ -1035,7 +1194,7 @@
         <div class="metric-card">
           <div class="metric-label">Risk/Reward</div>
           <div class="metric-value" id="rrValue">1:2.4</div>
-          <div class="metric-subtext">Minimum required: 1:2</div>
+          <div class="metric-subtext">Min: 1:2</div>
         </div>
       </div>
 
@@ -1077,7 +1236,7 @@
   <aside class="chat-panel">
     <div class="chat-header">
       <div class="chat-title">Quantitative Analysis AI</div>
-      <div class="chat-subtitle">Ask about signal logic, risk parameters, or market conditions. I follow strict quantitative rules.</div>
+      <div class="chat-subtitle">Ask about signal logic, risk parameters, or market conditions.</div>
     </div>
 
     <div class="chat-display" id="chatDisplay">
@@ -1087,13 +1246,7 @@
           <span class="message-time">Just now</span>
         </div>
         <div class="message-content">
-          System initialized. Following strict quantitative rules:
-          <br><br>
-          • BUY only if ALL 6 conditions met
-          • SELL only if ALL 6 conditions met
-          • Default: HOLD
-          • Confidence threshold: ≥65%
-          • Risk/Reward minimum: 1:2
+          System initialized. Following strict quantitative rules.
         </div>
       </div>
     </div>
@@ -1101,7 +1254,7 @@
     <div class="chat-input-area">
       <div class="chat-input-wrapper">
         <textarea class="chat-input" id="chatInput"
-          placeholder="Ask: Why HOLD? What conditions failed? Show risk analysis..." rows="2"></textarea>
+          placeholder="Ask: Why HOLD? Show risk analysis..." rows="2"></textarea>
         <button class="send-button" onclick="sendMessage()">SEND</button>
       </div>
     </div>
@@ -1213,12 +1366,11 @@
                 
                 return {
                     rsi: Math.max(20, Math.min(80, rsi)),
-macd: {
-  status: macdStatus,
-  strength: macdStrength,
-  histogram
-},
-
+                    macd: {
+                        status: macdStatus,
+                        strength: macdStrength,
+                        histogram
+                    },
                     bollinger: {
                         position: bbPosition,
                         description: bbPositionDesc,
@@ -1300,10 +1452,10 @@ macd: {
                 });
                 
                 // 6. Risk/Reward ≥ 1:2
-const rrBuy = this.calculateRiskReward(data, 'BUY');
-const rrSell = this.calculateRiskReward(data, 'SELL');
-const rrBest = Math.max(rrBuy.ratio, rrSell.ratio);
-const rrWorst = Math.min(rrBuy.ratio, rrSell.ratio);
+                const rrBuy = this.calculateRiskReward(data, 'BUY');
+                const rrSell = this.calculateRiskReward(data, 'SELL');
+                const rrBest = Math.max(rrBuy.ratio, rrSell.ratio);
+                const rrWorst = Math.min(rrBuy.ratio, rrSell.ratio);
                 const rrValid = rrBuy.ratio >= 2;
                 conditions.buyConditions.push({
                     name: 'Risk/Reward ≥ 1:2',
@@ -1359,12 +1511,7 @@ const rrWorst = Math.min(rrBuy.ratio, rrSell.ratio);
                     value: supportSellValid,
                     description: supportSellValid ? 'Price below support' : 'Price above support'
                 });
-                const rrSellValid = rrSell.ratio >= 2.0;
-conditions.sellConditions.push({
-  name: 'Risk/Reward ≥ 1:2',
-  value: rrSellValid,
-  description: `Current RR: 1:${rrSell.ratio.toFixed(1)}`
-});
+                
                 // ===== SIGNAL DETERMINATION =====
                 let signal = 'HOLD';
                 let confidence = 50;
@@ -1377,11 +1524,11 @@ conditions.sellConditions.push({
                     indicators.macd.status === 'Neutral',
                     rrBest < 2
                 ];
-const shouldHold = holdConditions.filter(Boolean).length >= 2;
-const buyScore = conditions.buyConditions.filter(c => c.value).length;
-const sellScore = conditions.sellConditions.filter(c => c.value).length;
-const allBuyValid = buyScore === conditions.buyConditions.length;
-const allSellValid = sellScore === conditions.sellConditions.length;
+                const shouldHold = holdConditions.filter(Boolean).length >= 2;
+                const buyScore = conditions.buyConditions.filter(c => c.value).length;
+                const sellScore = conditions.sellConditions.filter(c => c.value).length;
+                const allBuyValid = buyScore === conditions.buyConditions.length;
+                const allSellValid = sellScore === conditions.sellConditions.length;
 
                 // Determine signal
                 if (shouldHold) {
@@ -1415,9 +1562,9 @@ const allSellValid = sellScore === conditions.sellConditions.length;
                     signal = 'HOLD';
                 }
                 const riskReward =
-  signal === 'BUY' ? rrBuy :
-  signal === 'SELL' ? rrSell :
-  (rrBuy.ratio >= rrSell.ratio ? rrBuy : rrSell);
+                    signal === 'BUY' ? rrBuy :
+                    signal === 'SELL' ? rrSell :
+                    (rrBuy.ratio >= rrSell.ratio ? rrBuy : rrSell);
 
                 return {
                     symbol: data.symbol,
@@ -1579,37 +1726,35 @@ const allSellValid = sellScore === conditions.sellConditions.length;
                 });
             });
         }
-let lastAlertSignal = {};
+        
+        let lastAlertSignal = {};
 
+        const THRESHOLDS = Object.freeze({
+            VALID_SIGNAL_CONF: 65,
+            ALERT_CONF: 65,
+            MIN_RR: 2.0
+        });
 
-const THRESHOLDS = Object.freeze({
-  VALID_SIGNAL_CONF: 65,
-  ALERT_CONF: 65,
-  MIN_RR: 2.0
-});
+        function triggerAlertIfNeeded(analysis) {
+            const alertToggle = document.getElementById('alertToggle');
+            if (!alertToggle || !alertToggle.checked) return;
 
+            const isTradeSignal = analysis.signal === 'BUY' || analysis.signal === 'SELL';
+            if (!isTradeSignal) return;
 
-function triggerAlertIfNeeded(analysis) {
-  const alertToggle = document.getElementById('alertToggle');
-  if (!alertToggle || !alertToggle.checked) return;
+            if (analysis.confidence < THRESHOLDS.ALERT_CONF) return;
 
-  const isTradeSignal = analysis.signal === 'BUY' || analysis.signal === 'SELL';
-  if (!isTradeSignal) return;
+            const prevSig = lastAlertSignal[analysis.symbol];
+            if (prevSig === analysis.signal) return;
+            lastAlertSignal[analysis.symbol] = analysis.signal;
 
-  if (analysis.confidence < THRESHOLDS.ALERT_CONF) return;
-
-  const prevSig = lastAlertSignal[analysis.symbol];
-  if (prevSig === analysis.signal) return;
-  lastAlertSignal[analysis.symbol] = analysis.signal;
-
-  const msg = `${analysis.symbol}\nPrice: $${analysis.price.toFixed(2)}\nConfidence: ${analysis.confidence}%`;
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(`🚨 ${analysis.signal} SIGNAL`, { body: msg });
-  } else {
-    alert(`${analysis.signal} SIGNAL\n${msg}`);
-  }
-}
-
+            const msg = `${analysis.symbol}\nPrice: $${analysis.price.toFixed(2)}\nConfidence: ${analysis.confidence}%`;
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification(`🚨 ${analysis.signal} SIGNAL`, { body: msg });
+            } else {
+                alert(`${analysis.signal} SIGNAL\n${msg}`);
+            }
+        }
 
         function updateSymbolGrid() {
             const symbols = engine.filterByExchange(engine.activeExchange);
@@ -1727,9 +1872,9 @@ function triggerAlertIfNeeded(analysis) {
             document.getElementById('currentPrice').textContent = `$${analysis.price.toFixed(2)}`;
             document.getElementById('macdValue').textContent = analysis.indicators.macd.status;
 
-const macd = analysis.indicators.macd;
-document.getElementById('macdSubtext').textContent =
-  `Signal: ${macd.status} | Histogram: ${macd.strength} | Polarity: ${macd.histogram}`;
+            const macd = analysis.indicators.macd;
+            document.getElementById('macdSubtext').textContent =
+                `${macd.status} | ${macd.strength} | ${macd.histogram}`;
 
             const changeElement = document.getElementById('priceChange');
             changeElement.textContent = `${analysis.change >= 0 ? '+' : ''}${analysis.change.toFixed(2)}%`;
@@ -1767,8 +1912,8 @@ document.getElementById('macdSubtext').textContent =
             let html = '';
             
             // BUY conditions
-            html += `<div style="grid-column: 1; display: flex; flex-direction: column; gap: 12px;">`;
-            html += `<div style="font-size: 14px; font-weight: 600; color: var(--success); margin-bottom: 8px;">BUY CONDITIONS (ALL REQUIRED):</div>`;
+            html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+            html += `<div style="font-size: 13px; font-weight: 600; color: var(--success); margin-bottom: 8px;">BUY CONDITIONS (ALL REQUIRED):</div>`;
             conditions.buyConditions.forEach(condition => {
                 html += `
                     <div class="condition-card">
@@ -1783,8 +1928,8 @@ document.getElementById('macdSubtext').textContent =
             html += `</div>`;
             
             // SELL conditions
-            html += `<div style="grid-column: 2; display: flex; flex-direction: column; gap: 12px;">`;
-            html += `<div style="font-size: 14px; font-weight: 600; color: var(--danger); margin-bottom: 8px;">SELL CONDITIONS (ALL REQUIRED):</div>`;
+            html += `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+            html += `<div style="font-size: 13px; font-weight: 600; color: var(--danger); margin-bottom: 8px;">SELL CONDITIONS (ALL REQUIRED):</div>`;
             conditions.sellConditions.forEach(condition => {
                 html += `
                     <div class="condition-card">
@@ -1834,11 +1979,11 @@ document.getElementById('macdSubtext').textContent =
                 </div>
                 <div class="plan-item" style="grid-column: span 2; background: linear-gradient(135deg, var(--accent-light), var(--bg-tertiary));">
                     <div class="plan-label">Position Management</div>
-                    <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">
+                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-top: 8px;">
                         • Risk: ${((Math.abs(rr.entry - rr.stopLoss) / rr.entry) * 100).toFixed(1)}% of position<br>
                         • ${isBuy ? 'Move stop to breakeven at TP1' : 'Trail stop after TP1'}<br>
-                        • Consider partial profit at TP1 (30-50%)<br>
-                        • Maximum position: 3% of portfolio
+                        • Consider partial profit at TP1<br>
+                        • Max position: 3% of portfolio
                     </div>
                 </div>
             `;
@@ -1879,12 +2024,12 @@ document.getElementById('macdSubtext').textContent =
         function updateClock() {
             const now = new Date();
             const utc = now.toISOString().substr(11, 8);
-            document.querySelector('.status-indicator span').textContent = `REAL-TIME ANALYSIS • ${utc} UTC`;
+            document.querySelector('.status-indicator span').textContent = `REAL-TIME • ${utc}`;
         }
         
         // ===== CHAT FUNCTIONS =====
         function initializeChat() {
-            addChatMessage('bot', 'Quantitative Signal Engine initialized. I follow strict rules: BUY/SELL only when ALL conditions met. Default action is HOLD.');
+            addChatMessage('bot', 'Quantitative Signal Engine initialized. Following strict quantitative rules.');
         }
         
         function addChatMessage(sender, text) {
@@ -1946,7 +2091,7 @@ document.getElementById('macdSubtext').textContent =
                     if (failedBuy.length > 0) {
                         response += `❌ BUY conditions failed:\n`;
                         failedBuy.forEach(c => {
-                            response += `• ${c.name}: ${c.description}\n`;
+                            response += `• ${c.name}\n`;
                         });
                         response += `\n`;
                     }
@@ -1954,19 +2099,12 @@ document.getElementById('macdSubtext').textContent =
                     if (failedSell.length > 0) {
                         response += `❌ SELL conditions failed:\n`;
                         failedSell.forEach(c => {
-                            response += `• ${c.name}: ${c.description}\n`;
+                            response += `• ${c.name}\n`;
                         });
                         response += `\n`;
                     }
                     
-                    if (conditions.holdReasons.length > 0) {
-                        response += `⚠️ HOLD reasons:\n`;
-                        conditions.holdReasons.forEach(r => {
-                            response += `• ${r}\n`;
-                        });
-                    }
-                    
-                    response += `\nConfidence: ${analysis.confidence}% (threshold: 65%)`;
+                    response += `Confidence: ${analysis.confidence}% (threshold: 65%)`;
                     return response;
                 }
             }
@@ -1975,58 +2113,13 @@ document.getElementById('macdSubtext').textContent =
                 return `RISK ANALYSIS for ${analysis.symbol}:\n\n` +
                        `• Entry: $${analysis.riskReward.entry.toFixed(2)}\n` +
                        `• Stop Loss: $${analysis.riskReward.stopLoss.toFixed(2)}\n` +
-                       `• Risk: ${((Math.abs(analysis.riskReward.entry - analysis.riskReward.stopLoss) / analysis.riskReward.entry) * 100).toFixed(1)}%\n` +
-                       `• Take Profit 1: $${analysis.riskReward.takeProfit1.toFixed(2)}\n` +
                        `• Risk/Reward: 1:${analysis.riskReward.ratio.toFixed(1)}\n` +
-                       `• Position size: 2-3% of capital maximum\n` +
-                       `• Portfolio risk: 1% per trade`;
-            }
-            
-            if (q.includes('condition') || q.includes('rule')) {
-                let response = `SIGNAL CONDITIONS for ${analysis.signal}:\n\n`;
-                
-                if (analysis.signal === 'BUY') {
-                    conditions.buyConditions.forEach(c => {
-                        response += `${c.value ? '✅' : '❌'} ${c.name}\n`;
-                    });
-                } else if (analysis.signal === 'SELL') {
-                    conditions.sellConditions.forEach(c => {
-                        response += `${c.value ? '✅' : '❌'} ${c.name}\n`;
-                    });
-                } else {
-                    response += `Mixed indicators:\n`;
-                    const failedBuy = conditions.buyConditions.filter(c => !c.value);
-                    const failedSell = conditions.sellConditions.filter(c => !c.value);
-                    
-                    if (failedBuy.length > 0) {
-                        response += `❌ Failed BUY conditions: ${failedBuy.length}/6\n`;
-                    }
-                    if (failedSell.length > 0) {
-                        response += `❌ Failed SELL conditions: ${failedSell.length}/6\n`;
-                    }
-                }
-                
-                return response;
-            }
-            
-            if (q.includes('indicator') || q.includes('technical')) {
-                return `TECHNICAL INDICATORS for ${analysis.symbol}:\n\n` +
-                       `• RSI (14): ${analysis.indicators.rsi.toFixed(1)} (${analysis.indicators.rsi > 70 ? 'Overbought' : analysis.indicators.rsi < 30 ? 'Oversold' : 'Neutral'})\n` +
-                       `• MACD: ${analysis.indicators.macd.status} (${analysis.indicators.macd.strength})\n` +
-                       `• Bollinger Bands: ${analysis.indicators.bollinger.description}\n` +
-                       `• Stochastic: ${analysis.indicators.stochastic.value.toFixed(1)} (${analysis.indicators.stochastic.status})\n` +
-                       `• Volume: ${analysis.indicators.volume.status} (${analysis.indicators.volume.trend})\n` +
-                       `• ATR: $${analysis.indicators.atr.toFixed(2)}\n` +
-                       `• Support: $${analysis.indicators.support.toFixed(2)}\n` +
-                       `• Resistance: $${analysis.indicators.resistance.toFixed(2)}`;
+                       `• Max position: 3% of capital`;
             }
             
             // Default response
-            return `Current analysis for ${analysis.symbol}:\n` +
-                   `Signal: ${analysis.signal} (${analysis.confidence}% confidence)\n` +
-                   `Price: $${analysis.price.toFixed(2)} (${analysis.change >= 0 ? '+' : ''}${analysis.change.toFixed(2)}%)\n` +
-                   `Risk/Reward: 1:${analysis.riskReward.ratio.toFixed(1)}\n\n` +
-                   `Ask: "Why HOLD?", "Risk analysis", "Conditions", or "Technical indicators"`;
+            return `Current signal for ${analysis.symbol}: ${analysis.signal} (${analysis.confidence}% confidence)\n\n` +
+                   `Ask: "Why HOLD?", "Risk analysis", or "Conditions"`;
         }
         
         function autoResizeTextarea() {
@@ -2034,11 +2127,12 @@ document.getElementById('macdSubtext').textContent =
             textarea.style.height = 'auto';
             textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
         }
+        
         document.addEventListener('DOMContentLoaded', () => {
-    if ('Notification' in window && Notification.permission !== 'granted') {
-        Notification.requestPermission();
-    }
-});
+            if ('Notification' in window && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        });
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', initializeUI);
