@@ -931,7 +931,7 @@
         <div class="metric-card">
           <div class="metric-label">MACD</div>
           <div class="metric-value" id="macdValue">Bullish</div>
-          <div class="metric-subtext">Signal: Bullish | Histogram: Strengthening</div>
+          <div class="metric-subtext" id="macdSubtext">—</div>
         </div>
 
         <div class="metric-card">
@@ -1626,7 +1626,12 @@ function triggerAlertIfNeeded(analysis) {
             // Update header
             document.getElementById('currentSymbol').textContent = analysis.symbol;
             document.getElementById('currentPrice').textContent = `$${analysis.price.toFixed(2)}`;
-            
+            document.getElementById('macdValue').textContent = analysis.indicators.macd.status;
+
+const macd = analysis.indicators.macd;
+document.getElementById('macdSubtext').textContent =
+  `Signal: ${macd.status} | Histogram: ${macd.strength} | Polarity: ${macd.histogram}`;
+
             const changeElement = document.getElementById('priceChange');
             changeElement.textContent = `${analysis.change >= 0 ? '+' : ''}${analysis.change.toFixed(2)}%`;
             changeElement.className = `price-change ${analysis.change >= 0 ? 'positive' : 'negative'}`;
