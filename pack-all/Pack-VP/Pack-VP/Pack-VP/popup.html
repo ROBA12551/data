@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProxyForce Control Panel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 360px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f6fbff 0%, #dff6ff 100%);
+      color: #0b0f16;
+      padding: 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(11, 15, 22, 0.10);
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.55));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #0b0f16;
+      box-shadow: 0 8px 20px rgba(169, 233, 255, 0.25);
+    }
+
+    .header-text h1 {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: rgba(11, 15, 22, 0.62);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(11, 15, 22, 0.10);
+      border-radius: 14px;
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(11, 15, 22, 0.86);
+      margin-bottom: 12px;
+    }
+
+    .power-control {
+      margin-bottom: 16px;
+    }
+
+    .power-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .power-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(11, 15, 22, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(11, 15, 22, 0.10);
+    }
+
+    .power-fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.25));
+      border-radius: 999px;
+      transition: width 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slider-container {
+      margin-top: 12px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(11, 15, 22, 0.08);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.65));
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(169, 233, 255, 0.35);
+      border: 2px solid white;
+      transition: transform 220ms ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.65));
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(169, 233, 255, 0.35);
+      border: 2px solid white;
+      transition: transform 220ms ease;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    .toggle-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: rgba(11, 15, 22, 0.15);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 220ms ease;
+      border: none;
+      padding: 0;
+    }
+
+    .toggle-switch.active {
+      background: rgba(169, 233, 255, 0.85);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: left 220ms ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .toggle-switch.active::after {
+      left: 22px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 8px;
+      background: rgba(169, 233, 255, 0.10);
+      border-radius: 10px;
+      border: 1px solid rgba(169, 233, 255, 0.20);
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 900;
+      color: rgba(169, 233, 255, 0.95);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: rgba(11, 15, 22, 0.62);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: rgba(11, 15, 22, 0.62);
+      padding-top: 12px;
+      border-top: 1px solid rgba(11, 15, 22, 0.10);
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: rgba(11, 15, 22, 0.30);
+      border-radius: 50%;
+      margin-left: 4px;
+    }
+
+    .status-indicator.active {
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.10);
+      border: 1px solid rgba(239, 68, 68, 0.30);
+      color: rgba(239, 68, 68, 0.95);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .error.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-icon">⚙️</div>
+      <div class="header-text">
+        <h1>ProxyForce</h1>
+        <p>Control Panel</p>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error" id="errorMessage"></div>
+
+    <!-- Power Level Section -->
+    <div class="section">
+      <div class="section-title">⚡ Power Level</div>
+      <div class="power-control">
+        <div class="power-label">
+          <span>Level</span>
+          <span id="powerLevel">5</span>
+        </div>
+        <div class="power-bar">
+          <div class="power-fill" id="powerFill" style="width: 50%;"></div>
+        </div>
+        <div class="slider-container">
+          <input type="range" id="powerSlider" min="1" max="10" value="5">
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="section">
+      <div class="section-title">🎛️ Features</div>
+      <div class="toggle-group">
+        <div class="toggle-item">
+          <span>Proxy Control<span class="status-indicator" id="proxyStatus"></span></span>
+          <button class="toggle-switch" id="proxyToggle"></button>
+        </div>
+        <div class="toggle-item">
+          <span>Data Compression<span class="status-indicator" id="compressionStatus"></span></span>
+          <button class="toggle-switch" id="compressionToggle"></button>
+        </div>
+        <div class="toggle-item">
+          <span>Ad Blocking<span class="status-indicator" id="adBlockStatus"></span></span>
+          <button class="toggle-switch" id="adBlockToggle" disabled></button>
+        </div>
+        <div class="toggle-item">
+          <span>Tracking Protection<span class="status-indicator" id="trackingStatus"></span></span>
+          <button class="toggle-switch" id="trackingToggle" disabled></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="section">
+      <div class="section-title">📊 Today's Stats</div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="adCount">0</div>
+          <div class="stat-label">Ads Blocked</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="trackingCount">0</div>
+          <div class="stat-label">Trackers Blocked</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>ProxyForce v1.0.0 | Made with ❤️</p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
