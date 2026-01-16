@@ -7,17 +7,11 @@
   <meta name="keywords" content="proxy, vpn, ad blocker, compression, privacy, browser extension, chrome" />
   <meta property="og:title" content="ProxyForce - Advanced Proxy & Compression Control" />
   <meta property="og:description" content="Ultimate proxy control extension with 10-level power adjustment. Fast, secure, and private browsing." />
-  <meta property="og:image" content="https://proxyforce.io/og-image.png" />
   <meta property="og:type" content="website" />
   <title>ProxyForce - Advanced Proxy & Compression Control</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-
-    /* ============================
-       Simple: White / Black / Light Aqua
-       + "6D future" ambient background
-       ============================ */
 
     :root {
       --bg: #f6fbff;
@@ -57,9 +51,6 @@
       overflow-x: hidden;
     }
 
-    /* ============================
-       6D-ish background animation
-       ============================ */
     .bg {
       position: fixed;
       inset: 0;
@@ -69,7 +60,6 @@
       isolation: isolate;
     }
 
-    /* soft drifting fog */
     .bg::before {
       content: "";
       position: absolute;
@@ -90,7 +80,6 @@
       100% { transform: translate3d(18px, -6px, 0) scale(1.03) rotate(0.4deg); }
     }
 
-    /* hyper lattice grid */
     .lattice {
       position: absolute;
       inset: -15%;
@@ -111,7 +100,6 @@
       100% { transform: translate3d(14px, -12px, 0) rotate(-0.25deg) scale(1.05); }
     }
 
-    /* dimensional ribbons */
     .ribbons {
       position: absolute;
       inset: -10%;
@@ -139,9 +127,6 @@
       }
     }
 
-    /* ============================
-       Navigation (simple glass)
-       ============================ */
     nav {
       position: fixed;
       top: 14px;
@@ -152,7 +137,6 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-
       padding: 14px 16px;
       border-radius: 20px;
       background: var(--card);
@@ -232,9 +216,6 @@
       box-shadow: 0 20px 55px rgba(169, 233, 255, 0.28), 0 12px 28px rgba(11, 15, 22, 0.10);
     }
 
-    /* ============================
-       Sections
-       ============================ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -320,7 +301,6 @@
       box-shadow: 0 18px 48px rgba(169, 233, 255, 0.18), 0 12px 26px rgba(11, 15, 22, 0.08);
     }
 
-    /* Features */
     .features {
       padding: clamp(60px, 10vh, 90px) 20px;
       max-width: 1200px;
@@ -401,7 +381,6 @@
       z-index: 1;
     }
 
-    /* Power section */
     .power-section {
       padding: clamp(60px, 10vh, 90px) 20px;
       border-top: 1px solid var(--line);
@@ -504,7 +483,6 @@
       border-radius: 999px;
     }
 
-    /* Comparison */
     .comparison {
       padding: clamp(60px, 10vh, 90px) 20px;
       max-width: 1200px;
@@ -550,7 +528,73 @@
       background: rgba(169, 233, 255, 0.10);
     }
 
-    /* Footer */
+    .download-section {
+      background: rgba(255, 255, 255, 0.40);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .install-guide-text {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 24px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 20px;
+    }
+
+    .install-guide-text h3 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .install-guide-text ol, 
+    .install-guide-text ul {
+      color: var(--muted);
+      line-height: 2;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    .install-guide-text ul {
+      margin-top: 8px;
+    }
+
+    .code-block {
+      background: rgba(11, 15, 22, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+      word-break: break-all;
+      font-family: monospace;
+    }
+
+    .troubleshoot-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .troubleshoot-item {
+      padding: 16px;
+      border-left: 3px solid rgba(169, 233, 255, 0.75);
+    }
+
+    .troubleshoot-item p:first-child {
+      color: var(--ink);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .troubleshoot-item p:last-child {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
     footer {
       padding: 40px 20px;
       text-align: center;
@@ -587,7 +631,29 @@
       font-size: clamp(11px, 2vw, 12px);
     }
 
-    /* Responsive */
+    .download-btn-large {
+      background: linear-gradient(180deg, rgba(169, 233, 255, 0.95), rgba(169, 233, 255, 0.55));
+      color: rgba(11, 15, 22, 0.95);
+      padding: 14px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(11, 15, 22, 0.10);
+      box-shadow: 0 16px 40px rgba(169, 233, 255, 0.22);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform var(--t), box-shadow var(--t), filter var(--t);
+      font-size: 14px;
+    }
+
+    .download-btn-large:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+      box-shadow: 0 20px 55px rgba(169, 233, 255, 0.28);
+    }
+
     @media (max-width: 900px) {
       nav {
         top: 10px;
@@ -691,10 +757,10 @@
     <ul>
       <li><a href="#features">Features</a></li>
       <li><a href="#power">Power Control</a></li>
-      <li><a href="#comparison">Comparison</a></li>
-      <li><a href="https://chrome.google.com/webstore" rel="noopener noreferrer">Web Store</a></li>
+      <li><a href="#download">Download</a></li>
+      <li><a href="#installation">Install Guide</a></li>
     </ul>
-    <a href="https://chrome.google.com/webstore" class="cta-button" rel="noopener noreferrer">Install</a>
+    <a href="#download" class="cta-button">Download Now</a>
   </nav>
 
   <!-- Hero Section -->
@@ -706,7 +772,7 @@
         Fast, secure, and private browsing in one extension.
       </p>
       <div class="hero-buttons">
-        <a href="https://chrome.google.com/webstore" class="button button-primary" rel="noopener noreferrer">Add to Chrome</a>
+        <a href="#download" class="button button-primary">Download Extension</a>
         <a href="#features" class="button button-secondary">Learn More</a>
       </div>
     </div>
@@ -717,37 +783,37 @@
     <h2 class="section-title"><span class="accent">Key Features</span></h2>
     <div class="features-grid">
       <div class="feature-card">
-        <span class="feature-icon">SRV</span>
+        <span class="feature-icon">🔌</span>
         <h3>Proxy Control</h3>
         <p>Switch between multiple proxy servers freely. Achieve secure and fast communication with flexible server selection.</p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">ZIP</span>
+        <span class="feature-icon">📦</span>
         <h3>Data Compression</h3>
         <p>Control compression rates in 10 levels. Reduce network load by up to 99% and optimize bandwidth usage.</p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">BAN</span>
+        <span class="feature-icon">🚫</span>
         <h3>Ad Blocking</h3>
         <p>Automatically detect and remove unwanted advertisements. Enjoy a clean and comfortable browsing experience.</p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">EYE</span>
+        <span class="feature-icon">👁️</span>
         <h3>Tracking Prevention</h3>
         <p>Block 2,400+ tracking domains. Protect your privacy completely from online trackers and analytics services.</p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">LCK</span>
+        <span class="feature-icon">🔒</span>
         <h3>Encrypted Communication</h3>
         <p>Enforce HTTPS and SSL/TLS support. Establish a secure communication environment with strong encryption.</p>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">GER</span>
+        <span class="feature-icon">⚡</span>
         <h3>Caching Optimization</h3>
         <p>Smart caching mechanism for faster loading. Service Worker compatible for enhanced performance.</p>
       </div>
@@ -838,13 +904,127 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
+  <!-- Download Section -->
+  <section class="features download-section" id="download">
+    <h2 class="section-title" style="margin-bottom: 30px;"><span class="accent">Download ProxyForce</span></h2>
+    
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="feature-card" style="text-align: center; padding: 40px;">
+        <span class="feature-icon" style="font-size: 48px;">📦</span>
+        <h3 style="font-size: 24px; margin-bottom: 12px;">Get ProxyForce Now</h3>
+        <p style="margin-bottom: 24px; color: var(--muted);">
+          Download the complete extension package. Perfect for manual installation on your Chrome browser.
+        </p>
+        <a href="pack-all/Pack-VP.zip" download class="download-btn-large">
+          ⬇️ Download Pack-VP.zip
+        </a>
+        <p style="font-size: 12px; color: var(--muted); margin-top: 16px;">
+          📦 File: Pack-VP.zip | Packed extension ready for Chrome
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation Guide Section -->
+  <section class="comparison" id="installation">
+    <h2 class="section-title" style="margin-bottom: 30px;"><span class="accent">How to Install ProxyForce</span></h2>
+
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <!-- Installation Steps -->
+      <div class="install-guide-text">
+        <h3>📋 Installation Steps</h3>
+        <ol>
+          <li>
+            <strong style="color: var(--ink);">Download the ZIP file</strong>
+            <ul>
+              <li>Click the "Download Pack-VP.zip" button above</li>
+              <li>Save it to a folder (e.g., Desktop or Documents)</li>
+            </ul>
+          </li>
+          <li>
+            <strong style="color: var(--ink);">Extract the ZIP file</strong>
+            <ul>
+              <li>Right-click the <strong>Pack-VP.zip</strong> file</li>
+              <li>Select <strong>"Extract All"</strong> or <strong>"解凍"</strong></li>
+              <li>A new folder named <strong>"Pack-VP"</strong> will be created</li>
+            </ul>
+          </li>
+          <li>
+            <strong style="color: var(--ink);">Open Chrome Extensions</strong>
+            <ul>
+              <li>Open Chrome and go to: <span class="code-block">chrome://extensions/</span></li>
+              <li>Or: Menu ☰ → More tools → Extensions</li>
+            </ul>
+          </li>
+          <li>
+            <strong style="color: var(--ink);">Enable Developer Mode</strong>
+            <ul>
+              <li>Click the toggle switch in the top-right: <strong>"Developer mode"</strong></li>
+              <li>This enables loading unpacked extensions</li>
+            </ul>
+          </li>
+          <li>
+            <strong style="color: var(--ink);">Load the extension</strong>
+            <ul>
+              <li>Click <strong>"Load unpacked"</strong> button (appears after enabling Developer mode)</li>
+              <li>Navigate to and select the <strong>"Pack-VP"</strong> folder</li>
+              <li>Click <strong>"Select Folder"</strong></li>
+            </ul>
+          </li>
+          <li>
+            <strong style="color: var(--ink);">Verify Installation</strong>
+            <ul>
+              <li>ProxyForce should now appear in your extensions list</li>
+              <li>The extension icon will appear in your Chrome toolbar</li>
+              <li>Click the icon to open the popup and start using it</li>
+            </ul>
+          </li>
+        </ol>
+
+        <div style="background: rgba(169, 233, 255, 0.10); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 24px;">
+          <h4 style="color: var(--ink); font-weight: 900; margin-bottom: 12px;">📍 Quick Reference:</h4>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 8px;">
+            <strong>Chrome Extensions URL:</strong> <span class="code-block">chrome://extensions/</span>
+          </p>
+          <p style="color: var(--muted); font-size: 13px;">
+            <strong>Folder Location:</strong> Look for the extracted <strong>"Pack-VP"</strong> folder when clicking "Load unpacked"
+          </p>
+        </div>
+      </div>
+
+      <!-- Troubleshooting -->
+      <div class="install-guide-text" style="margin-top: 20px;">
+        <h3>❓ Troubleshooting</h3>
+        <div class="troubleshoot-grid">
+          <div class="troubleshoot-item">
+            <p>❌ Extension doesn't show up?</p>
+            <p>Make sure you've enabled "Developer mode" in chrome://extensions/ first.</p>
+          </div>
+          <div class="troubleshoot-item">
+            <p>❌ "Load unpacked" button missing?</p>
+            <p>Enable the "Developer mode" toggle in the top-right corner of the Extensions page.</p>
+          </div>
+          <div class="troubleshoot-item">
+            <p>❌ File extraction failed?</p>
+            <p>Try using 7-Zip or WinRAR instead of the default Windows extractor. Make sure you extract to a simple folder path.</p>
+          </div>
+          <div class="troubleshoot-item">
+            <p>❌ Extension won't load?</p>
+            <p>Check that manifest.json exists in the Pack-VP folder. Make sure the folder path doesn't contain special characters.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
   <section class="hero" style="min-height: auto; padding: clamp(50px, 8vh, 70px) 20px;">
     <div class="hero-content">
-      <h2 class="section-title" style="margin-bottom: 10px;"><span class="accent">Get Started Now</span></h2>
-      <p>ProxyForce is available free on the Chrome Web Store. Install in seconds and start protecting your privacy.</p>
+      <h2 class="section-title" style="margin-bottom: 10px;"><span class="accent">Ready to Start?</span></h2>
+      <p>Download ProxyForce now and take control of your browsing experience with advanced proxy and compression features.</p>
       <div class="hero-buttons" style="margin-top: 20px;">
-        <a href="https://chrome.google.com/webstore" class="button button-primary" rel="noopener noreferrer">Add to Chrome</a>
+        <a href="#download" class="button button-primary">Download Extension</a>
+        <a href="#installation" class="button button-secondary">View Installation Guide</a>
       </div>
     </div>
   </section>
