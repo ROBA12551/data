@@ -1226,7 +1226,7 @@ const rrBuy = this.calculateRiskReward(data, 'BUY');
 const rrSell = this.calculateRiskReward(data, 'SELL');
 const rrBest = Math.max(rrBuy.ratio, rrSell.ratio);
 const rrWorst = Math.min(rrBuy.ratio, rrSell.ratio);
-                const rrValid = rrBest >= 2;
+                const rrValid = rrBuy.ratio >= 2;
                 conditions.buyConditions.push({
                     name: 'Risk/Reward ≥ 1:2',
                     value: rrValid,
@@ -1281,7 +1281,12 @@ const rrWorst = Math.min(rrBuy.ratio, rrSell.ratio);
                     value: supportSellValid,
                     description: supportSellValid ? 'Price below support' : 'Price above support'
                 });
-                
+                const rrSellValid = rrSell.ratio >= 2;
+conditions.sellConditions.push({
+  name: 'Risk/Reward ≥ 1:2',
+  value: rrSellValid,
+  description: `Current RR: 1:${rrSell.ratio.toFixed(1)}`
+});
                 // ===== SIGNAL DETERMINATION =====
                 let signal = 'HOLD';
                 let confidence = 50;
@@ -1299,11 +1304,7 @@ const buyScore = conditions.buyConditions.filter(c => c.value).length;
 const sellScore = conditions.sellConditions.filter(c => c.value).length;
 const allBuyValid = buyScore === conditions.buyConditions.length;
 const allSellValid = sellScore === conditions.sellConditions.length;
-const riskReward =
-  signal === 'BUY' ? rrBuy :
-  signal === 'SELL' ? rrSell :
-  (rrBuy.ratio >= rrSell.ratio ? rrBuy : rrSell); // HOLDは良い方を表示
-      
+
                 // Determine signal
                 if (shouldHold) {
                     signal = 'HOLD';
@@ -1335,7 +1336,11 @@ const riskReward =
                 if (confidence < 65) {
                     signal = 'HOLD';
                 }
-                
+                const riskReward =
+  signal === 'BUY' ? rrBuy :
+  signal === 'SELL' ? rrSell :
+  (rrBuy.ratio >= rrSell.ratio ? rrBuy : rrSell);
+
                 return {
                     symbol: data.symbol,
                     name: data.name,
@@ -1499,34 +1504,34 @@ const riskReward =
 let lastAlertSignal = {};
 
 
+const THRESHOLDS = Object.freeze({
+  VALID_SIGNAL_CONF: 65,
+  ALERT_CONF: 65,
+  MIN_RR: 2.0
+});
+
 
 function triggerAlertIfNeeded(analysis) {
-    const alertToggle = document.getElementById('alertToggle');
-    const alertEnabled = alertToggle && alertToggle.checked;
-    const THRESHOLDS = { VALID: 65, ALERT: 65, MIN_RR: 2.0 };
+  const alertToggle = document.getElementById('alertToggle');
+  if (!alertToggle || !alertToggle.checked) return;
 
+  const isTradeSignal = analysis.signal === 'BUY' || analysis.signal === 'SELL';
+  if (!isTradeSignal) return;
 
-    if (!alertEnabled) return;
+  if (analysis.confidence < THRESHOLDS.ALERT_CONF) return;
 
-    if (
-        (analysis.signal === 'BUY' || analysis.signal === 'SELL') &&
-        analysis.confidence >= THRESHOLDS.ALERT
+  const prevSig = lastAlertSignal[analysis.symbol];
+  if (prevSig === analysis.signal) return;
+  lastAlertSignal[analysis.symbol] = analysis.signal;
 
-    ) {
-        const prev = lastAlertSignal[analysis.symbol];
-        if (prev === analysis.signal) return;
-
-        lastAlertSignal[analysis.symbol] = analysis.signal;
-
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification(`🚨 ${analysis.signal} SIGNAL`, {
-                body: `${analysis.symbol}\nPrice: $${analysis.price}\nConfidence: ${analysis.confidence}%`,
-            });
-        } else {
-            alert(`${analysis.signal} SIGNAL\n${analysis.symbol}\nConfidence: ${analysis.confidence}%`);
-        }
-    }
+  const msg = `${analysis.symbol}\nPrice: $${analysis.price.toFixed(2)}\nConfidence: ${analysis.confidence}%`;
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(`🚨 ${analysis.signal} SIGNAL`, { body: msg });
+  } else {
+    alert(`${analysis.signal} SIGNAL\n${msg}`);
+  }
 }
+
 
         function updateSymbolGrid() {
             const symbols = engine.filterByExchange(engine.activeExchange);
