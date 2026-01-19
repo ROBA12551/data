@@ -6993,23 +6993,7 @@ function saveGlobalAdSettings() {
             }
         });
     </script>
-<!-- ========================================
-     💰 広告初期化 - Body 終了直前
-     ======================================== -->
 
-<!-- Popunder広告 -->
-<script>
-(function() {
-    setTimeout(() => {
-        const script = document.createElement('script');
-        script.src = 'https://engagementidentifiers.com/14/29/79/142979e47a62210d83ef5275ac4060ca.js';
-        script.async = true;
-        script.onerror = () => console.warn('⚠️ Popunder failed');
-        document.body.appendChild(script);
-        console.log('✓ Popunder initialized');
-    }, 2000);
-})();
-</script>
 
 <!-- SmartLink広告（デスクトップのみ） -->
 <script>
