@@ -1,0 +1,55 @@
+# robots.txt for https://twitchan.com/
+
+# すべての検索エンジンにアクセス許可
+User-agent: *
+Allow: /
+
+# サイトマップの場所を指定
+Sitemap: https://twitchan.com/sitemap.xml
+Sitemap: https://twitterchan.netlify.app/sitemap.xml
+
+# クローリング速度の最適化（Googlebotのみ）
+User-agent: Googlebot
+Crawl-delay: 0
+
+# 主要検索エンジンの設定
+User-agent: Bingbot
+Crawl-delay: 0
+
+User-agent: Slurp
+Crawl-delay: 0
+
+# 不要なクローラーをブロック（帯域幅節約）
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Netlify関連のディレクトリを除外
+Disallow: /.netlify/
+Disallow: /netlify.toml
+
+# Netlifyサブドメイン用の個別設定
+User-agent: Googlebot
+Allow: https://twitterchan.netlify.app/
+
+User-agent: Bingbot
+Allow: https://twitterchan.netlify.app/
+
+# メインドメイン優先設定（重複コンテンツ対策）
+User-agent: *
+Disallow: /preview/
+Disallow: /draft/
+Disallow: /staging/
+
+# キャッシュ関連
+Disallow: /*.json$
+Disallow: /*.xml$
+Allow: /sitemap.xml
